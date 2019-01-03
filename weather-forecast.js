@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$('#weather').hide()
+	$('.short').hide();
 	if(navigator.geolocation){
 		var currentPosition = '';
 		navigator.geolocation.getCurrentPosition(function(position){
@@ -25,6 +25,23 @@ $(document).ready(function(){
 				var time = json.location.localtime.split('')[1];
 				var cloud = json.current.cloud;
 				
+				if(temp <18){
+					$('.grey-jumbo').css({
+						backgroundImage:'url(https://cdn.pixabay.com/photo/2018/01/23/12/00/away-3101302__340.jpg)'
+					});
+					$('#temp').html("<h1>It's a pretty cold day today...<hr></h1>");
+				} else if (temp >10 && temp <28){
+					$('.grey-jumbo').css({
+						backgroundImage:'url(https://cdn.pixabay.com/photo/2017/10/10/07/48/hills-2836301__340.jpg)'
+					});
+					$('#temp').html("<h1>It's a sunny day today...<hr></h1>");
+				} else {
+					$('.grey-jumbo').css({
+						backgroundImage:'url(https://image.shutterstock.com/image-photo/standalone-trees-during-very-hot-260nw-360422789.jpg)'
+					});
+					$('#temp').html("<h1>It's a very hot day today...<hr></h1>");
+				}
+
 				$('#weather').show();
 				$('#weather').html(name + ', ' + region + ', ' + country)
 				//console.log(data);
@@ -32,6 +49,8 @@ $(document).ready(function(){
 				$('#info1').html(time);
 				$('#info2').html('Wind ' + wind + ' kph');
 				$('#info3').html(temp + '&#8451');
+				
+				$('.short').show();
 				
 				var yes = true;
 				$('#switch').on('click', function(){
@@ -45,6 +64,13 @@ $(document).ready(function(){
 						yes = true;
 					}
 				});
+				if(cloud <=30){
+						$('#info5').html('Clear sky');
+					} else{
+						$('#info5').html('Cloudy Sky');
+					}
+					$('#info6').html('Humidity: ' + humidity + '%');
+			
 			});	
 				
 		});
